@@ -1,6 +1,6 @@
 package com.example.apidatos.controller;
 
-import com.example.apidatos.repository.CargaTicketsZendesk;
+import com.example.apidatos.service.CargaTicketsZendesk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +18,9 @@ public class TicketController {
     public ResponseEntity<String> testCrearTicket() {
         try {
             cargaTicketsZendesk.cargarTickets();
-            return ResponseEntity.ok("La tarea de creación de ticket se ejecutó. Revisa la consola y Zendesk.");
+            return ResponseEntity.ok("listeilor.");
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Falló la ejecución: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("error en la ejecución: " + e.getMessage());
         }
     }
 }
