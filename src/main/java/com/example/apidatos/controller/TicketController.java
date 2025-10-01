@@ -1,6 +1,6 @@
 package com.example.apidatos.controller;
 
-import com.example.apidatos.service.CargaTicketsZendesk;
+import com.example.apidatos.repository.CargaTicketsZendesk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,12 +16,17 @@ import lombok.NoArgsConstructor;
 public class Licitaciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_licitacion;
+    @JsonProperty("id_licitacion")
+    private Long idLicitacion;
     @JsonProperty("id_cliente")
-    @Column(name="id_cliente")
     private Long idCliente;
+    @JsonProperty("id_sucursal")
     private Long idSucursal;
-    private String fecha;
-    private Double precio;
-    private String fecha_limite;
+    private LocalDateTime fecha;
+    @JsonProperty("fecha_limite")
+    private LocalDateTime fechaLimite;
+    @JsonProperty("unidades_cotizadas")
+    private Integer unidadesCotizadas;
+    @JsonProperty("unidades_adjudicadas")
+    private Integer unidadesAdjudicadas;
 }

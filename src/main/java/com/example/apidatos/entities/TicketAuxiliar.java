@@ -1,5 +1,6 @@
 package com.example.apidatos.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,32 +10,21 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@NoArgsConstructor // Requerido por JPA
-@AllArgsConstructor // Requerido por @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tickets_auxiliar")
 public class TicketAuxiliar {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column(name = "id_ticket")
-    // 3. SE USA camelCase para el nombre en Java
+    @JsonProperty("id_ticket")
     private Long idTicket;
-
-    @Column(name = "id_licitacion", nullable = false)
+    @JsonProperty("id_licitacion")
     private Long idLicitacion;
-
-    @Column(name = "zendesk_ticket_id", nullable = false)
-    private String zendeskTicketId;
-
-
-    @Column(name = "fecha_creacion", updatable = false)
+    @JsonProperty("zendesk_ticket_id")
+    private Long zendeskTicketId;
+    @JsonProperty("fecha_creacion")
     private LocalDateTime fechaCreacion;
 
-    @PrePersist
-    protected void onCreate() {
-        fechaCreacion = LocalDateTime.now();
-    }
 }

@@ -1,5 +1,6 @@
 package com.example.apidatos.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +19,6 @@ public class Cliente {
     private String nombre;
     private String email;
     private String telefono;
+    @JsonProperty("es_empresa")
+    private Boolean esEmpresa;
 }
