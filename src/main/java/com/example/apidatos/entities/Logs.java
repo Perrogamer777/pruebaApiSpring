@@ -16,18 +16,18 @@ public class Logs {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_log")
     private Integer id;
-
+    // id ticket zendesk
     @Column(name = "id_ticket")
     private Long idTicket;
 
     @Column(name = "id_licitacion")
-    private Integer idLicitacion;
+    private Long idLicitacion;
 
     @Column(name = "fecha_intento_operacion")
     private Timestamp fechaIntentoOperacion;
 
     @Column(name = "resultado_codigo_peticion")
-    private String resultadoCodigoPeticion;
+    private Integer resultadoCodigoPeticion;
 
     @Column(name = "json_enviado", columnDefinition = "text")
     private String jsonEnviado;

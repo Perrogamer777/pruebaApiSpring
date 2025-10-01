@@ -35,8 +35,19 @@ public class CargaTicketsZendesk {
         this.logsRepository = logsRepository;
     }
     // se ejecuta cada minuto
-    @Scheduled(cron = "0 * * * * ?")
+    //@Scheduled(cron = "0 * * * * ?")
     public void cargarTickets(){
+
+        Long idLicitacionParaProcesar = 3L;
+
+        // revisar la tabla logs si ya se procesó esta licitación.
+        if (logsRepository.existsByIdLicitacion(idLicitacionParaProcesar)) {
+            System.out.println("La licitación número: "+idLicitacionParaProcesar+" ya fue procesada.");
+            return;
+        }
+
+
+
         System.out.println("Cargando tickets de Zendesk para el usuario: " + parametrosZendesk.getUsuario());
         String urlZendesk= "https://dimarsa-47694.zendesk.com/api/v2/tickets.json";
 
@@ -62,7 +73,7 @@ public class CargaTicketsZendesk {
         HttpEntity<BodyTicket> requestEntity = new HttpEntity<>(body, headers);
 
         try{
-            System.out.println("Enviand post a zendddd");
+            System.out.println("Enviando post a zendddd");
             ResponseEntity<String> response = restTemplate.postForEntity(urlZendesk, requestEntity, String.class);
 
             ObjectMapper objectMapper = new ObjectMapper();
@@ -72,11 +83,13 @@ public class CargaTicketsZendesk {
             System.out.println("Exitooooo. Status Code: " + response.getStatusCode());
             System.out.println("Respuesta del servidor: " + response.getBody());
             Logs log = Logs.builder()
+                    .idLicitacion(idLicitacionParaProcesar)
                     .idTicket(payload.getTicket().getId())
                     .fechaIntentoOperacion(Timestamp.valueOf(LocalDateTime.now()))
-                    .resultadoCodigoPeticion(response.getStatusCode().toString())
+                    .resultadoCodigoPeticion(response.getStatusCode().value())
                     .jsonEnviado(requestEntity.toString())
-                    .jsonRecibido(jsonBody).build();
+                    .jsonRecibido(jsonBody)
+                    .build();
             logsRepository.saveAndFlush(log);
         }
         catch(Exception e){
